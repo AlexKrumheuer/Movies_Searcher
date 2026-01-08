@@ -1,0 +1,79 @@
+.title-filme {
+        color: #fff;
+        text-align: center;
+        width: 100%;
+        font-size: 1.5rem;
+    }
+    .filme {
+        background-color: #0A0A10;
+        width: 100%;
+        padding: 2rem 10rem;
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+        min-height: 75vh;
+    }
+
+    .button-lancamento {
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        background-color: #39A0FF;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border: none;
+        transition: 0.25s;
+        color: #fff;
+        margin-top: 1rem;
+    }
+
+    .button-lancamento:hover {
+        background-color: #fff;
+        color: #39A0FF;
+    }
+
+    .grid-filme {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .paginacao {
+        color: #fff;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .paginacao button {
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        background-color: #fff;
+        height: fit-content;
+        border-radius: 8px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border: none;
+        transition: 0.25s;
+    }
+
+    .paginacao button:hover { 
+        background-color: #39A0FF;
+        color: #fff;
+    }
+
+    .paginacao p {
+        font-size: 1.5rem;
+        background-color: #0A0A10;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+    }
+
+    .paginacao p:hover {
+        background-color: #39A0FF;
+        border: 1px solid #39A0FF;
+        color: #fff;
+    }

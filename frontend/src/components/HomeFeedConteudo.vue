@@ -7,9 +7,6 @@
     })
 
     const emit = defineEmits(['conteudo-clicado-home']);
-    const mudarPagina = (novaPagina, id) => {
-    emit('conteudo-clicado-home', novaPagina, id, props.sectionInfo.tipo);
-}
 
     const {itens, loading, buscarMidia} = useMidia()
 
@@ -33,55 +30,20 @@
     <div class="feed">
         <div class="title">
             <h1>{{props.sectionInfo.title}}</h1>
-            <button @click="verTudo()">
+            <route-link @click="verTudo()">
                 Ver tudo
-            </button>
+            </route-link>
         </div>
         <div class="grid">
             <p v-if="loading">Carregando...</p>
-            <Card @mudar-pagina="mudarPagina('specifc',item.id)" v-for="item in itens.slice(0,10)" :key="item.id" :cardInfo="item"/>
+            <router-link
+                v-for="item in itens.slice(0,10)" 
+                :key="item.id" 
+                :to="{ name: 'details', params: { type: item.type, id: item.id  } }"
+                style="text-decoration: none; color: inherit;">
+            >
+                <Card :cardInfo="item"/>
+            </router-link>
         </div>
     </div>
 </template>
-<style>
-    .feed {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-    }
-    .title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .title h1 {
-        color: #fff;
-        font-size: 4rem;
-    }
-
-    .title button {
-        padding: 1.5rem 2rem;
-        cursor: pointer;
-        background-color: #fff;
-        height: fit-content;
-        border-radius: 8px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        border: none;
-        transition: 0.25s;
-
-    }
-
-    .title button:hover { 
-        background-color: #39A0FF;
-        color: #fff;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        gap: 2rem;
-    }
-</style>

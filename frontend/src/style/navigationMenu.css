@@ -1,0 +1,41 @@
+nav {
+        background-color: #1C1C23;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 5rem;
+        font-size: 1.5rem;
+    }
+
+    .element {
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+        color: #fff;
+        transition: 0.25s;
+        cursor: pointer;
+        gap: 1rem;
+    }
+
+    .element:hover {
+         color: #39A0FF;
+    }
+
+    .search {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 0.5rem;
+    }
+
+    .search input {
+        padding: 0.5rem;
+        border: none;
+    }
+
+    .search input:focus {
+        outline: none;
+    }
+    .router-link-active {
+        color: #39A0FF; 
+        border-bottom: '1px solid #39A0FF';
+        text-decoration: none;
+    }

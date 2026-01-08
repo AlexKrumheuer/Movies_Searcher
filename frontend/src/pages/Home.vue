@@ -1,11 +1,11 @@
 <script setup>
 import {ref} from 'vue'
 import HomeFeedConteudo from '../components/HomeFeedConteudo.vue';
+import '../style/homeContent.css'
 
 const emit = defineEmits(['mudar-pagina', 'definir-id-especifico']);
 const conteudoClicadoHome = (novaPagina, id, tipo) => {
     emit('mudar-pagina', novaPagina);
-    emit('definir-id-especifico', id, tipo);
 }
 const lancamento = ref({
     title: 'Filmes Populares',

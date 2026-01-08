@@ -18,6 +18,7 @@ export function useMidia() {
       itens.value = data.results.map((item) => ({
         id: item.id,
         title: item.title || item.name,
+        type: item.media_type || tipo,
         year: (item.release_date || item.first_air_date || "").split("-")[0],
         img: item.poster_path
           ? `https://image.tmdb.org/t/p/w500${item.poster_path}`

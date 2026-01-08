@@ -8,26 +8,26 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TmdbService {
-    private String apiKey; // pega api key
+    @Value("${api.key}")
+    private String apiKey; // Get api key
 
-    private final RestClient restClient; // instancia http client
+    private final RestClient restClient; // Instanciate http client
     
-    public TmdbService(@Value("${api.key}") String apiKey) {
-        this.apiKey = apiKey;
-        System.out.println("Api key: " + this.apiKey);
+    public TmdbService() {
         
         this.restClient = RestClient.builder()
             .baseUrl("https://api.themoviedb.org/3")
             .build();
     }
 
+    // Get Content by name
     public String buscarConteudoPorNome(String nome, String tipo, int page) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                                     .path("/search/{tipo}")
                                     .queryParam("page", page)
                                     .queryParam("query", nome)
-                                    .queryParam("api_key", this.apiKey)
+                                    .queryParam("api_key", apiKey)
                                     .queryParam("language", "pt-BR")
                                     .queryParam("include_adult","false")
                                     .build(tipo))
@@ -35,6 +35,7 @@ public class TmdbService {
                 .body(String.class);
     }
 
+    // discover content
     public String descobrirConteudo(
         String tipo,
         int page,
@@ -46,7 +47,7 @@ public class TmdbService {
                     var builder = uriBuilder
                                     .path("/discover/{tipo}")
                                     .queryParam("page", page)
-                                    .queryParam("api_key", this.apiKey)
+                                    .queryParam("api_key", apiKey)
                                     .queryParam("with_genres", idsGenres)
                                     .queryParam("language", "pt-BR")
                                     .queryParam("include_adult","false");
@@ -64,6 +65,7 @@ public class TmdbService {
                 .body(String.class);
     }
 
+    // Content specific by service
     public String conteudoEspecificoService(
         String tipo, Long id
     ) {
@@ -71,7 +73,7 @@ public class TmdbService {
                 .uri(uriBuilder -> uriBuilder
                                     .path("/{tipo}/{id}")
                                     .queryParam("append_to_response", "credits,videos")
-                                    .queryParam("api_key", this.apiKey)
+                                    .queryParam("api_key", apiKey)
                                     .queryParam("language", "pt-BR")
                                     .queryParam("include_adult","false")
                                     .build(tipo, id))
@@ -79,13 +81,15 @@ public class TmdbService {
                 .body(String.class); 
     }
 
+
+    // Genders
     public String generosService(
         String tipo
     ) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                                     .path("/genre/{tipo}/list")
-                                    .queryParam("api_key", this.apiKey)
+                                    .queryParam("api_key", apiKey)
                                     .queryParam("language", "pt-BR")
                                     .queryParam("include_adult","false")
                                     .build(tipo))

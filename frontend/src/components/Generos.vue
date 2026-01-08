@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch, defineEmits } from 'vue';
 import {useMidia} from '../util/useMidia';
+import '../style/genders.css'
 
 const props = defineProps({
     tipo: {type: String, required: true},
@@ -44,31 +45,3 @@ const filtrarPorGenero = (id) => {
         </div>
     </section>
 </template>
-<style>
-.generos {
-    background-color: #2C2C34;
-    padding: 1rem 5rem;
-    color: white;
-}
-
-.lista-generos {
-    width: 50vw;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-}
-
-.genero-button {
-    background-color: #39A0FF;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.genero-button:hover {
-    background-color: #1E90FF;
-}
-</style>

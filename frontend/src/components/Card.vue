@@ -1,45 +1,12 @@
 <script setup>
-import { defineEmits } from 'vue';
-const emit = defineEmits(['mudar-pagina'])
+import '../style/card.css'
 const props = defineProps({
     cardInfo: Object,
 })
 </script>
 <template>
-    <div class="card" @click="$emit('mudar-pagina', 'specific')">
+    <div class="card">
         <img :src="props.cardInfo.img" :alt="props.cardInfo.title">
         <p>{{ props.cardInfo.title }} {{ props.cardInfo.year }}</p>
     </div>
 </template>
-<style>
-.card {
-    transition: 1s;
-    cursor: pointer;
-    width: 100%;
-    position: relative;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-.card img {
-    width: 100%;
-    opacity: 0.8;
-}
-
-.card p {
-    position: absolute;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: bold;
-    bottom: 0;
-    left: 10;
-    padding: 0.2rem;
-    transition: 0.25s;
-}
-
-.card p:hover {
-    color: #39A0FF;
-}
-</style>
