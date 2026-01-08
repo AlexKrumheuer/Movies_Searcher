@@ -1,4 +1,8 @@
 <script setup>
+    // Navigation Menu component
+    // It has all the logic of the page`s routes. And also it`s resposible for the input search
+
+
 import {    ref, watch } from 'vue';
 import '../style/navigationMenu.css'
 const emit = defineEmits(['mudar-valor-pesquisa', 'abrir-categoria'])

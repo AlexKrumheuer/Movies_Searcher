@@ -1,4 +1,9 @@
 <script setup>
+// Component for genders
+// It receives a Prop with the type (tv-show or movie) and a list with all the genders to be displayed
+// It has also a logic to deal with removing and adding genders
+
+
 import { onMounted, ref, watch, defineEmits } from 'vue';
 import {useMidia} from '../util/useMidia';
 import '../style/genders.css'

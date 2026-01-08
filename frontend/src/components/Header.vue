@@ -1,4 +1,9 @@
 <script setup>
+    // Header component
+
+
+
+    
     import "../style/index.css"
 </script>
 

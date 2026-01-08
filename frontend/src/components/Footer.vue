@@ -1,4 +1,9 @@
 <script setup>
+
+    // Application Footer
+
+
+
     import "../style/index.css"
 </script>
 <template>

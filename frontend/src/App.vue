@@ -2,11 +2,19 @@
 import Header from './components/Header.vue';
 import NavigationMenu from './components/NavigationMenu.vue';
 import Generos from './components/Generos.vue';
-import SpecificPage from './pages/SpecificPage.vue';
 import Footer from './components/Footer.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRoute} from 'vue-router'
 
-let valorPesquisa = ref('')
+const route = useRoute()
+const valorPesquisa = ref('')
+
+const tipoAtual = computed(() => {
+  if (route.path.includes('movie')) return 'movie';
+  if (route.path.includes('shows')) return 'tv';
+  return '';
+});
+
 
 // navigation menuconst valorPesquisa = ref('')
 function mudarValorPesquisa(novoValor) {
@@ -45,10 +53,14 @@ const zerarGeneros = () => {
     @filtrar-genero="filtrarGenero"
     :lista-generos="listaGeneros"
     v-if="pagina !== 'home' && pagina !== 'specific' && categoriaClicada && pagina !== 'lancamentos'" 
-    :tipo="pagina === 'filmes' ? 'movie' : pagina === 'series' ? 'tv' : ''" 
+    :tipo="tipoAtual" 
   />
-  <router-view>
-
+  <router-view v-slot="{ Component }">
+    <component
+      :is="Component"
+      :valor-pesquisa="valorPesquisa"
+      :lista-generos="listaGeneros"
+    />
   </router-view>
 
   <Footer/>

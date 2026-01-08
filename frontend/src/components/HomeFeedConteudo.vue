@@ -1,4 +1,9 @@
 <script setup>
+    // Content of home component
+    // It searches in the API for the movies and tv shows most watched. Then it splices the list
+    // with the 10 most viewed of each.
+
+
     import { defineProps, onMounted, defineEmits} from 'vue';
     import { useMidia } from '../util/useMidia';
     import Card from './Card.vue';
@@ -16,7 +21,7 @@
 
     const verTudo = () => {
         if(props.sectionInfo.tipo === 'movie') {
-            emit('conteudo-clicado-home', 'filmes', null, null);
+            
         } else if(props.sectionInfo.tipo === 'tv') {
             emit('conteudo-clicado-home', 'series', null, null);
         }
@@ -30,9 +35,14 @@
     <div class="feed">
         <div class="title">
             <h1>{{props.sectionInfo.title}}</h1>
-            <route-link @click="verTudo()">
+            <router-link 
+                :to="props.sectionInfo.tipo === 'movie' ? '/movie' : '/shows'" 
+                class="button-ver-tudo"
+            >
+            <button>
                 Ver tudo
-            </route-link>
+            </button>
+            </router-link>
         </div>
         <div class="grid">
             <p v-if="loading">Carregando...</p>
