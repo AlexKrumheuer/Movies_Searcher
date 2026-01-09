@@ -1,0 +1,120 @@
+.auth-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0A0A10;
+}
+
+.auth-container {
+    background-color: #1C1C23;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
+    gap: 2rem;
+    color: #fff;
+    padding: 2rem;
+    margin: 5rem;
+    border-radius: 8px;
+}
+
+.auth-container h2 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.auth-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    width: 100%;
+}
+
+
+.auth-input input {
+    padding: 0.8rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.auth-input__text {
+    color: #000;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 10% 90%;
+    background-color: #fff;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 1.8rem;
+}
+
+.auth-input__password {
+    color: #000;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 10% 80% 10%;
+    background-color: #fff;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 1.8rem;
+}
+
+.auth-input__text input,
+.auth-input__password input  {
+    width: 100%;
+    border: none;
+}
+
+.icon {
+    margin: 0 auto;
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color:#39A0FF;
+    color: #fff;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.auth-submit:hover {
+    background-color: #fff;
+    color: #39A0FF;
+    border: 1px solid #39A0FF;
+}
+
+.container-redirect {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.auth-redirect__links {
+    color: #A0A0A8;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-top: 1rem;
+}
+
+.auth-redirect__links:hover {
+    color: #39A0FF;
+    text-decoration: underline;
+}
+
+.auth-error { 
+    color: red;
+    font-size: 1.2rem;
+}
+

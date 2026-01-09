@@ -19,14 +19,6 @@
         buscarMidia(props.sectionInfo.tipo, 1, "", "popular");
     }
 
-    const verTudo = () => {
-        if(props.sectionInfo.tipo === 'movie') {
-            
-        } else if(props.sectionInfo.tipo === 'tv') {
-            emit('conteudo-clicado-home', 'series', null, null);
-        }
-    }
-
     onMounted(() => {
         carregar();  
     })

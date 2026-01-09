@@ -5,13 +5,17 @@ import Release from '../pages/Release.vue'
 import Show from '../pages/Show.vue'
 import Movie from '../pages/Movie.vue'
 import SpecificPage from '../pages/SpecificPage.vue'
+import Register from '../pages/auth/Register.vue'
+import Login from '../pages/auth/Login.vue'
 
 const routes = [
     { path: '/', name: 'Home', component: Home},
     { path: '/release', component: Release},
     { path: '/shows', component: Show},
     { path: '/movie', component: Movie},
-    { path: '/details/:type/:id', name: 'details', component: SpecificPage, props: true}
+    { path: '/details/:type/:id', name: 'details', component: SpecificPage, props: true},
+    { path: '/register', name: 'register', component: Register},
+    { path: '/login', name: "login", component: Login}
 ]
 
 const router = createRouter({
