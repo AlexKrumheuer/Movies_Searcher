@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.movies_searcher.repository.UserRepository;
+import com.movies_searcher.service.TokenBlacklistService;
 import com.movies_searcher.service.TokenService;
 
 import jakarta.servlet.FilterChain;
@@ -21,10 +22,12 @@ public class SecurityFilter extends OncePerRequestFilter {
     // autowired
     private final TokenService tokenService;
     private final UserRepository userRepository;
+    private final TokenBlacklistService tokenBlacklistService;
     
-    public SecurityFilter(TokenService tokkenService, UserRepository userRepository) {
-        this.tokenService = tokkenService;
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository, TokenBlacklistService tokenBlacklistService) {
+        this.tokenService = tokenService;
         this.userRepository = userRepository;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
 
@@ -34,6 +37,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
 
         if(token != null){
+            if(tokenBlacklistService.isTokenBlacklisted(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
             var email = tokenService.validateToken(token); 
 
             if(email != null && !email.isEmpty()){
