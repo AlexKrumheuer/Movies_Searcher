@@ -1,0 +1,74 @@
+.perfil-container {
+        background-color: #1C1C23;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .perfil-info {
+        width: 100%;
+        padding: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+        background-image: url('https://img.freepik.com/vetores-gratis/paisagem-noturna-do-oceano-lua-cheia-e-estrelas-brilham_107791-7397.jpg?semt=ais_hybrid&w=740&q=80');
+    }
+
+    .perfil-image {
+        width: 10rem;
+        border-radius: 50%;
+    }
+
+    .perfil-info h2 {
+        color: #fff;
+        font-size: 2rem;
+    }
+
+    .perfil-tracking {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .track {
+        background-color: #28272d;
+        color: #fff;
+        padding: 1.5rem;
+        font-weight: bold;
+        font-size: 1.3rem;
+        border-radius: 8px;
+    }
+
+    .section-nav {
+        width: 40%;
+        display: flex;
+        gap: 4rem;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .sec {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .sec:hover {
+        color: #39A0FF;
+    }
+
+    .grid-favorites {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .card-img {
+        width: 10rem;
+    }

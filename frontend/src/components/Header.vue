@@ -8,12 +8,18 @@
     import { ref, onMounted, onUnmounted } from 'vue'
     import api from '../services/api.js'
     import {useRouter} from 'vue-router'
+    import { onClickOutside } from '@vueuse/core'
 
+
+    const userProfileContainer = ref(null); 
     const router = useRouter()
     let showUser = ref(false)
     const open = () => {
         showUser.value = !showUser.value
     }
+    onClickOutside(userProfileContainer, () => {
+        showUser.value = false;
+    });
 
 
     const isLoggedIn = ref(!!localStorage.getItem('token'))
@@ -50,7 +56,7 @@
         <img class="logo" src="../../public/img/logo.png" alt="">
         <div class="container-icons">
             <div class="user-menu-wrapper">
-                <fa class="icons" icon="user" @click="open" />
+                <fa ref="userProfileContainer" class="icons" icon="user" @click="open" />
                 
                 <nav v-if="showUser" class="user-dropdown">
                     <ul>
@@ -59,8 +65,8 @@
                             <li><router-link @click="showUser = false" to="/register">Criar Conta</router-link></li>
                         </template>
                         <template v-else>
-                            <li><router-link @click="showUser = false"  to="/login">Meu Perfil</router-link></li>
-                            <li><router-link @click="showUser = false" to="/register">Favoritos</router-link></li>
+                            <li><router-link @click="showUser = false"  to="/perfil">Meu Perfil</router-link></li>
+                            <li><router-link @click="showUser = false" to="/favorite">Favoritos</router-link></li>
                             <li @click="logout" class="logout-btn">Sair</li>
                         </template>
                     </ul>
