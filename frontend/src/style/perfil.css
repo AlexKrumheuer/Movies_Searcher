@@ -69,6 +69,11 @@
         gap: 2rem;
     }
 
+    .perfil-config {
+        width: 100%;
+        height: 100%;
+    }
+
     .card-img {
         width: 10rem;
     }

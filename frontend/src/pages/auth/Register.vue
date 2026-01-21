@@ -3,33 +3,33 @@ import { ref } from 'vue'
 import '../../style/auth.css'
 import Validator from '../../util/Validator'
 import api from '../../services/api'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
+import PasswordInput from './PasswordInput.vue'
+
 let username = ref('')
 let email = ref('')
 let password = ref('')
 let confirmPassword = ref('')
-let showPassword = ref(false)
-let showConfirmPassword = ref(false)
 let error = ref('')
 const router = useRouter()
 
 const validateInfo = () => {
-    if(!Validator.validateText(username.value)) {
+    if (!Validator.validateText(username.value)) {
         error.value = "Username não pode estar em branco"
         return
     }
 
-    if(!Validator.validateEmail(email.value)) {
+    if (!Validator.validateEmail(email.value)) {
         error.value = "E-mail inválido, exemplo: test@test.com"
         return
     }
 
-    if(!Validator.validatePassword(password.value)) {
+    if (!Validator.validatePassword(password.value)) {
         error.value = "Senha inválida, exemplo: Test@@1234"
         return
     }
 
-    if(!Validator.validateEqualsPassword(password.value, confirmPassword.value)) {
+    if (!Validator.validateEqualsPassword(password.value, confirmPassword.value)) {
         error.value = "As senhas não coincidem"
         return
     }
@@ -38,14 +38,14 @@ const validateInfo = () => {
 
 const registrarUser = async () => {
     try {
-        const response = await api.post("/auth/register",{
+        const response = await api.post("/auth/register", {
             username: username.value,
             email: email.value,
             password: password.value
         })
         router.push("/login")
-    } catch(e) {
-        if(e.response && e.response.status === 400) {
+    } catch (e) {
+        if (e.response && e.response.status === 400) {
             error.value = "Esse e-mail já está em uso"
         } else {
             error.value = "Ocorreu um erro, tente novamente"
@@ -73,28 +73,14 @@ const registrarUser = async () => {
 
                 </div>
             </div>
-            <div class="auth-input">
-                <label for="password">Senha</label>
-                <div class="auth-input__password">
-                    <fa icon="lock" class="icon" />
-                    <input :type="showPassword ? 'text' : 'password'" name="password" placeholder="Digite sua senha..." v-model="password">
-                    <fa v-if="showPassword" @click="showPassword = false" icon="eye" class="icon"/>
-                    <fa v-else icon="eye-slash" @click="showPassword = true" class="icon"/>
-                </div>
-            </div>
-            <div class="auth-input">
-                <label for="confirmPassword">Confirme sua senha</label>
-                <div class="auth-input__password">
-                    <fa icon="lock" class="icon"/>
-                    <input :type="showConfirmPassword ? 'text' : 'password'" name="confirmPassword" placeholder="Digite a sua senha..." v-model="confirmPassword">
-                    <fa v-if="showConfirmPassword" @click="showConfirmPassword = false" icon="eye" class="icon"/>
-                    <fa v-else icon="eye-slash" @click="showConfirmPassword = true" class="icon"/>
-                </div>
-            </div>
-            <button class="auth-submit" type="submit">Registrar</button>
+            <PasswordInput :id="'password'" :password="password" v-model="password" placeholder="Type your password..."
+                :labelText="'Password'" />
+            <PasswordInput :id="'confirmPassword'" :password="confirmPassword" v-model="confirmPassword"
+                placeholder="Confirm your password..." :labelText="'Confirm your Password'" />
+            <button class="auth-submit" type="submit">Register</button>
             <div>
                 <router-link to="/login" class="auth-redirect__links">
-                    <p>Já possui uma conta?</p>
+                    <p>Do you already have an account?</p>
                 </router-link>
                 <p v-if="error" class="auth-error">{{ error }}</p>
             </div>

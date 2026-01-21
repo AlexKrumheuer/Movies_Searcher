@@ -1,5 +1,6 @@
 package com.movies_searcher.model;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,13 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @Column(name ="created_at", updatable = false)
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+
+    private LocalDate createdAt;
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;

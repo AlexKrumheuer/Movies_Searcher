@@ -101,3 +101,41 @@
     width: 50%;
     gap: 1rem;
 }
+
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.favorite {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.favorite p {
+    font-size: 1.3rem;
+}
+
+.favorite-icon {
+    font-size: 1.5rem;
+}
+
+.favorite:hover {
+    color: red;
+}
+
+.rating {
+    font-size: 1.3rem;
+}
+
+.rating-star {
+    cursor: pointer;
+}
+
+.rating-star:hover {
+    color: yellow;
+}

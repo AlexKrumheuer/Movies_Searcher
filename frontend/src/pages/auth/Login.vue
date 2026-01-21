@@ -4,9 +4,9 @@ import '../../style/auth.css'
 import Validator from '../../util/Validator'
 import api from '../../services/api'
 import { useRouter } from 'vue-router'
+import PasswordInput from './PasswordInput.vue'
 let email = ref('')
 let password = ref('')
-let showPassword = ref(false)
 let error = ref('')
 const router = useRouter()
 
@@ -55,16 +55,8 @@ const loginUser = async () => {
 
                 </div>
             </div>
-            <div class="auth-input">
-                <label for="password">Senha</label>
-                <div class="auth-input__password">
-                    <fa icon="lock" class="icon" />
-                    <input :type="showPassword ? 'text' : 'password'" name="password" placeholder="Digite sua senha..."
-                        v-model="password">
-                    <fa v-if="showPassword" @click="showPassword = false" icon="eye" class="icon" />
-                    <fa v-else icon="eye-slash" @click="showPassword = true" class="icon" />
-                </div>
-            </div>
+            <PasswordInput :id="'password'" :password="confirmPassword" v-model="password"
+                placeholder="Type your password..." :labelText="Password" />
             <button class="auth-submit" type="submit">Logar</button>
             <div>
                 <div class="container-redirect">

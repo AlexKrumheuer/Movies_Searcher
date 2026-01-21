@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useRoute } from 'vue-router'
 import { tbmdService } from '../services/tmbd';
 import '../style/specificPage.css'
+import api from '../services/api';
 
 const route = useRoute()
 
@@ -14,6 +15,7 @@ let detalhes = ref(null);
 onMounted(async () => {
     if (type && id) {
         detalhes.value = await tbmdService.getDetails(type, id);
+        console.log(detalhes.value.id)
     }
 }
 )
@@ -45,6 +47,39 @@ function listas() {
 function selectInfo(type) {
     mostrarMais.value = false
     infoSelected.value = type;
+}
+
+
+//rating
+
+const favorite = async () => {
+    if(!detalhes.value) return
+    const tituloCorreto = detalhes.value.title || detalhes.value.name
+
+    const favoriteObject = {
+        tmdbId: detalhes.value.id,
+        videoType: type,
+        posterPath: detalhes.value.poster_path,
+        title: tituloCorreto
+    }
+    console.log(favoriteObject)
+    try {
+        const response = await api.post("/api/favorite", favoriteObject)
+        alert("Favorited")
+    } catch(e){
+        if (e.response) {
+            console.error("Api Error:", e.response.status, e.response.data);
+            if (e.response.status === 409) {
+                alert("This item is already in your favorites list");
+            } else if (e.response.status === 403) {
+                alert("Session expired, sign in again");
+            } else {
+                alert("Error saving: " + (e.response.data || "Unkown error"));
+            }
+        } else {
+            console.error("Server error:", e);
+        }
+    }
 }
 </script>
 <template>
@@ -148,9 +183,29 @@ function selectInfo(type) {
                     </div>
                 </div>
                 <div>
-                    <div>
+                    <div class="rating-container">
                         <h2>Avaliações</h2>
                         <p>TMDB: {{ detalhes.vote_average }} / 10 ({{ detalhes.vote_count }} votos)</p>
+                        <div class="favorite" @click="favorite">
+                            <fa class="favorite-icon" icon="heart"/>
+                            <p>Add to favorite</p>
+                        </div>
+                        <div class="favorite">
+                            <fa class="favorite-icon" icon="eye"/>
+                            <p>Watched</p>
+                        </div>
+                        <div class="favorite"> 
+                            <fa class="favorite-icon" icon="list"/>
+                            <p>Watchlist</p>
+                        </div>
+                        <div class="rating">
+                            <p>Rating</p>
+                            <fa class="rating-star" icon="star"/>
+                            <fa class="rating-star" icon="star"/>
+                            <fa class="rating-star" icon="star"/>
+                            <fa class="rating-star" icon="star"/>
+                            <fa class="rating-star" icon="star"/>
+                        </div>
                     </div>
                 </div>
             </div>

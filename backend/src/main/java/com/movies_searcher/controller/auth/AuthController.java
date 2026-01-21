@@ -2,6 +2,7 @@ package com.movies_searcher.controller.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.movies_searcher.dto.LoginResponseDTO;
 import com.movies_searcher.dto.LoginUserDTO;
 import com.movies_searcher.dto.RegisterUserDTO;
+import com.movies_searcher.dto.UserResponseDTO;
 import com.movies_searcher.model.User;
 import com.movies_searcher.service.AuthService;
 import com.movies_searcher.service.TokenBlacklistService;
@@ -18,6 +20,9 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -30,6 +35,13 @@ public class AuthController {
         this.authService = authService;
         this.tokenBlacklistService = tokenBlacklistService;
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(new UserResponseDTO(user.getUsername(), user.getEmail(), user.getCreatedAt()));
+    }
+    
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody @Valid RegisterUserDTO data) {
