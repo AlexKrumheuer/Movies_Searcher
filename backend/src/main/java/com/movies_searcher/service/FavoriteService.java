@@ -1,11 +1,13 @@
 package com.movies_searcher.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.movies_searcher.dto.FavoriteCreateDTO;
+import com.movies_searcher.dto.FavoriteResponseDTO;
 import com.movies_searcher.model.Favorite;
 import com.movies_searcher.model.User;
 import com.movies_searcher.repository.FavoriteRepository;
@@ -17,8 +19,18 @@ public class FavoriteService {
         this.favoriteRepository = favoriteRepository;
     }
 
-    public List<Favorite> listFavorites(User user) {
-        return favoriteRepository.findAllByUser(user);
+    public List<FavoriteResponseDTO> listFavorites(User user) {
+        List<Favorite> favorites = favoriteRepository.findAllByUser(user);
+
+        return favorites.stream()
+            .map(fav -> new FavoriteResponseDTO(
+                fav.getId(),
+                fav.getTmdbId(),
+                fav.getVideoType(),
+                fav.getPosterPath(),
+                fav.getTitle()
+            ))
+            .collect(Collectors.toList());
     }
 
     public Favorite createFavorite(FavoriteCreateDTO data, Authentication authentication){

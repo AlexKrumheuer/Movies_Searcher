@@ -36,17 +36,16 @@ public class FavoriteController {
     @GetMapping()
     public ResponseEntity<List<FavoriteResponseDTO>> getAllFavorite(Authentication authetication) {
         User userLogado = (User) authetication.getPrincipal();
-        List<Favorite> favoritesList = favoriteService.listFavorites(userLogado);
-        List<FavoriteResponseDTO> response = favoritesList.stream()
-                                                .map(FavoriteResponseDTO::new)
-                                                .toList();
-        return ResponseEntity.ok(response);
+        List<FavoriteResponseDTO> favoritesList = favoriteService.listFavorites(userLogado);
+
+        return ResponseEntity.ok(favoritesList);
     }
 
     @PostMapping()
-    public ResponseEntity<Void> createFavorite(@RequestBody @Valid FavoriteCreateDTO data, Authentication authentication) {
-        favoriteService.createFavorite(data, authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<FavoriteResponseDTO> createFavorite(@RequestBody @Valid FavoriteCreateDTO data, Authentication authentication) {
+        Favorite savedFavorite = favoriteService.createFavorite(data, authentication);
+        FavoriteResponseDTO responseDTO = new FavoriteResponseDTO(savedFavorite);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
     
     @DeleteMapping("/{tmdbId}")
