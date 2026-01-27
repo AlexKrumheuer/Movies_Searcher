@@ -5,8 +5,8 @@ import PerfilSaved from '../user/PerfilSaved.vue';
 </script>
 <template>
     <div class="container-user__content">
-        <h2 class="user-content--title">Your Favorited Media</h2>
-        <PerfilSaved :display="'favorite'"/>
+        <h2 class="user-content--title">Your Watch List</h2>
+        <PerfilSaved :display="'watchlist'"/>
     </div>
 </template>
 <style>

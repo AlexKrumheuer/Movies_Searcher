@@ -1,25 +1,63 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import Home from '../pages/Home.vue'
-import Release from '../pages/Release.vue'
-import Show from '../pages/Show.vue'
-import Movie from '../pages/Movie.vue'
-import SpecificPage from '../pages/SpecificPage.vue'
-import Register from '../pages/auth/Register.vue'
-import Login from '../pages/auth/Login.vue'
-import Perfil from '../pages/personal/user/Perfil.vue'
-import Favorite from '../pages/personal/favorite/Favorite.vue'
-
 const routes = [
-    { path: '/', name: 'Home', component: Home},
-    { path: '/release', component: Release},
-    { path: '/shows', component: Show},
-    { path: '/movie', component: Movie},
-    { path: '/details/:type/:id', name: 'details', component: SpecificPage, props: true},
-    { path: '/register', name: 'register', component: Register},
-    { path: '/login', name: "login", component: Login},
-    { path: '/perfil', name: "perfil", component: Perfil},
-    { path: '/favorite', name: "favorite", component: Favorite}
+    { 
+        path: '/',
+        name: 'Home', 
+        component: () => import('../pages/Home.vue')
+    },
+    { 
+        path: '/release', 
+        component: () => import('../pages/Release.vue')
+    },
+    { 
+        path: '/shows', 
+        component: () => import('../pages/Show.vue')
+    },
+    { 
+        path: '/movie', 
+        component: () => import('../pages/Movie.vue')
+    },
+    { 
+        path: '/details/:type/:id', 
+        name: 'details', 
+        props: true,
+        component: () => import('../pages/SpecificPage.vue')
+    },
+    { 
+        path: '/register', 
+        name: 'register', 
+        component: () => import('../pages/auth/Register.vue')
+    },
+    { 
+        path: '/login', 
+        name: "login", 
+        component: () => import('../pages/auth/Login.vue')
+    },
+    { 
+        path: '/perfil', 
+        name: "perfil", 
+        meta: {requiredAuth: true },
+        component: () => import('../pages/personal/user/Perfil.vue')
+    },
+    { 
+        path: '/favorite', 
+        name: "favorite", 
+        meta: { requiredAuth: true },
+        component: () => import('../pages/personal/favorite/Favorite.vue')
+    },
+    { 
+        path: '/watched', 
+        name: "watched", 
+        meta: { requiredAuth: true },
+        component: () => import('../pages/personal/watched/Watched.vue')
+    },
+    { 
+        path: '/watch_list', 
+        name: "watch_list", 
+        meta: { requiredAuth: true },
+        component: () => import('../pages/personal/watchList/WatchList.vue')
+    },
 ]
 
 const router = createRouter({

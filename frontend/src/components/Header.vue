@@ -61,12 +61,15 @@
                 <nav v-if="showUser" class="user-dropdown">
                     <ul>
                         <template v-if="!isLoggedIn">
-                            <li><router-link @click="showUser = false" to="/login">Entrar</router-link></li>
-                            <li><router-link @click="showUser = false" to="/register">Criar Conta</router-link></li>
+                            <li><router-link @click="showUser = false" to="/login">Sign In</router-link></li>
+                            <li><router-link @click="showUser = false" to="/register">Create Account</router-link></li>
                         </template>
                         <template v-else>
-                            <li><router-link @click="showUser = false"  to="/perfil">Meu Perfil</router-link></li>
-                            <li><router-link @click="showUser = false" to="/favorite">Favoritos</router-link></li>
+                            <li><router-link @click="showUser = false"  to="/perfil">My Profile</router-link></li>
+                            <li><router-link @click="showUser = false" to="/favorite">Favorites</router-link></li>
+                            <li><router-link @click="showUser = false" to="/watched">Watched</router-link></li>
+                            <li><router-link @click="showUser = false" to="/watch_list">Watch List</router-link></li>
+                            
                             <li @click="logout" class="logout-btn">Sair</li>
                         </template>
                     </ul>

@@ -12,4 +12,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response, 
+  (error) => {
+    if (error.response && (error.response.status === 403 || error.response.status === 401)) {
+      localStorage.removeItem('token');
+      
+      window.dispatchEvent(new Event('auth-change'));
+      
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

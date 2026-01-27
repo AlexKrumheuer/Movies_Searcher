@@ -1,6 +1,5 @@
 package com.movies_searcher.model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,31 +14,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "favorite")
-@NoArgsConstructor
+@Table(name = "rating")
 @Setter
 @Getter
-public class Favorite {
+@NoArgsConstructor
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+    @Column(nullable = false)
+    private int rating;
+    @Column(nullable = false)
+    private Long tmdbId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @Column(nullable = false)
-    private Long tmdbId;
-    @Column(nullable = false, length = 10)
+    @Column(length = 10, nullable = false)
     private String videoType;
-    @Column(nullable = false, length = 500)
-    private String posterPath;
-    @Column(nullable = false, length = 500)
-    private String title;
-    public Favorite(User user, Long tmdbId, String videoType, String posterPath, String title) {
-        this.user = user;
+
+    public Rating(int rating, Long tmdbId, User user, String videoType) {
+        this.rating = rating;
         this.tmdbId = tmdbId;
+        this.user = user;
         this.videoType = videoType;
-        this.posterPath = posterPath;
-        this.title = title;
     }
 }

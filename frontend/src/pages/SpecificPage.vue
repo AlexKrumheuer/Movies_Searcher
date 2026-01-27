@@ -3,22 +3,45 @@ import { onMounted, ref, computed } from 'vue';
 import { useRoute } from 'vue-router'
 import { tbmdService } from '../services/tmbd';
 import '../style/specificPage.css'
-import api from '../services/api';
-
+import { useMediaList } from '../util/useMediaList';
+import { useRating } from '../util/useRating';
 const route = useRoute()
 
 const type = route.params.type
 const id = route.params.id
 
+const favoritesManager = useMediaList('/api/favorite', id);
+const watchedManager = useMediaList('/api/watched', id);
+const watchlistManager = useMediaList('/api/watchlist', id);
+const ratingManager = useRating(id, type)
 
 let detalhes = ref(null);
+
 onMounted(async () => {
     if (type && id) {
         detalhes.value = await tbmdService.getDetails(type, id);
-        console.log(detalhes.value.id)
+
+        await Promise.all([
+            favoritesManager.checkStatus(),
+            watchedManager.checkStatus(),
+            watchlistManager.checkStatus(),
+            ratingManager.getRating()
+        ]);
     }
-}
-)
+});
+
+const handleToggle = (manager) => {
+    if (!detalhes.value) return;
+
+    const mediaData = {
+        tmdbId: detalhes.value.id,
+        videoType: type,
+        posterPath: detalhes.value.poster_path,
+        title: detalhes.value.title || detalhes.value.name
+    };
+
+    manager.toggle(mediaData);
+};
 
 let infoSelected = ref("cast");
 let mostrarMais = ref(false)
@@ -49,38 +72,13 @@ function selectInfo(type) {
     infoSelected.value = type;
 }
 
-
-//rating
-
-const favorite = async () => {
+const rating = (n) => {
     if(!detalhes.value) return
-    const tituloCorreto = detalhes.value.title || detalhes.value.name
-
-    const favoriteObject = {
-        tmdbId: detalhes.value.id,
-        videoType: type,
-        posterPath: detalhes.value.poster_path,
-        title: tituloCorreto
-    }
-    console.log(favoriteObject)
-    try {
-        const response = await api.post("/api/favorite", favoriteObject)
-        alert("Favorited")
-    } catch(e){
-        if (e.response) {
-            console.error("Api Error:", e.response.status, e.response.data);
-            if (e.response.status === 409) {
-                alert("This item is already in your favorites list");
-            } else if (e.response.status === 403) {
-                alert("Session expired, sign in again");
-            } else {
-                alert("Error saving: " + (e.response.data || "Unkown error"));
-            }
-        } else {
-            console.error("Server error:", e);
-        }
-    }
+    console.log(n)
+    ratingManager.setRating(n);
 }
+
+
 </script>
 <template>
     <div class="card-info" v-if="detalhes">
@@ -186,25 +184,46 @@ const favorite = async () => {
                     <div class="rating-container">
                         <h2>Avaliações</h2>
                         <p>TMDB: {{ detalhes.vote_average }} / 10 ({{ detalhes.vote_count }} votos)</p>
-                        <div class="favorite" @click="favorite">
-                            <fa class="favorite-icon" icon="heart"/>
-                            <p>Add to favorite</p>
+                        <div class="favorite" @click="handleToggle(favoritesManager)">
+                            <fa 
+                                class="favorite-icon" 
+                                icon="heart"
+                                :style="{ color: favoritesManager.isAdded.value ? 'red' : 'inherit' }"
+                            />
+                            <p>{{ favoritesManager.isAdded.value ? "Remove Favorite" : "Add Favorite" }}</p>
                         </div>
-                        <div class="favorite">
-                            <fa class="favorite-icon" icon="eye"/>
-                            <p>Watched</p>
+                        <div class="favorite" @click="handleToggle(watchedManager)">
+                            <fa 
+                                class="favorite-icon" 
+                                icon="eye"
+                                :style="{ color: watchedManager.isAdded.value ? '#39A0FF' : 'inherit' }"
+                                />
+                            <p>{{ watchedManager.isAdded.value ? "Unwatch" : "Watched" }}</p>
                         </div>
-                        <div class="favorite"> 
-                            <fa class="favorite-icon" icon="list"/>
-                            <p>Watchlist</p>
+                        <div class="favorite" @click="handleToggle(watchlistManager)"> 
+                            <fa 
+                                class="favorite-icon" 
+                                icon="list"
+                                :style="{ color: watchlistManager.isAdded.value ? '#39A0FF' : 'inherit' }"
+                            />
+                            <p>{{ watchlistManager.isAdded.value ? "Remove from Watchlist" : "Watchlist" }}</p>
                         </div>
                         <div class="rating">
                             <p>Rating</p>
-                            <fa class="rating-star" icon="star"/>
-                            <fa class="rating-star" icon="star"/>
-                            <fa class="rating-star" icon="star"/>
-                            <fa class="rating-star" icon="star"/>
-                            <fa class="rating-star" icon="star"/>
+                            <div class="rating-value">
+                                <div>
+                                        <fa
+                                class="rating-star"
+                                icon="star"
+                                :key="n"
+                                v-for="n in 5"
+                                @click="rating(n)"
+                                :style="{ color: ratingManager.currentRating.value >= n ? '#FFD700' : 'inherit'}"
+                              />
+                                </div>
+                                
+                              <p>{{ ratingManager.currentRating.value }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

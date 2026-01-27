@@ -13,10 +13,26 @@ const props = defineProps({
 
 
 let search = ref('')
+let debouceTimer = null
 
 const submitSearch = () => {
+    clearTimeout(debouceTimer)
     emit('mudar-valor-pesquisa', search.value)
 }
+
+const inputSearch = () => {
+    emit('mudar-valor-pesquisa', search.value)
+}
+
+watch(search, (newValue) => {
+    clearTimeout(debouceTimer)
+    if(newValue.length >= 3 || newValue.length === 0) {
+        debouceTimer = setTimeout(() => {
+            inputSearch()
+        }, 300)
+    }
+})
+
 
 let categoriaCliqueVariavel = ref(false)
 watch(() => props.categoriaClicada, () => {
