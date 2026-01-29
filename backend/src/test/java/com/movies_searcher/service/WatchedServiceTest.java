@@ -85,6 +85,8 @@ public class WatchedServiceTest {
 
         ArgumentCaptor<Watched> watchedCaptor = ArgumentCaptor.forClass(Watched.class);
 
+        verify(watchedRepository, times(1)).save(watchedCaptor.capture());
+
         Watched savedObject =  watchedCaptor.getValue();
         assertEquals(dto.tmdbId(), savedObject.getTmdbId()); 
         assertEquals(dto.videoType(), savedObject.getVideoType());

@@ -8,14 +8,15 @@ import org.springframework.web.client.RestClient;
 
 @Service
 public class TmdbService {
-    @Value("${api.key}")
-    private String apiKey; // Get api key
+    private final String apiKey; // Get api key
 
     private final RestClient restClient; // Instanciate http client
 
-    public TmdbService() {
+    public TmdbService(RestClient.Builder builder, @Value("${api.key}") String apiKey) {
 
-        this.restClient = RestClient.builder()
+        this.apiKey = apiKey;
+
+        this.restClient = builder
                 .baseUrl("https://api.themoviedb.org/3")
                 .build();
     }
