@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import PasswordInput from '../../auth/PasswordInput.vue';
 import api from '../../../services/api';
+import '../../../style/user/perfilconfiguration.css'
 
 const userData = ref({})
 
@@ -67,80 +68,3 @@ const confirmNewPassword = ref('')
 
     </form>
 </template>
-<style>
-.form-perfil-configuration {
-    color: #fff;
-    width: 100vw;
-    padding: 3rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.wrapper-account__config {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-}
-
-.perfil-config-wrapper {
-    display: grid;
-    width: 50%;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.username-config {
-    display: grid;
-    grid-template-columns: 90% 10%;
-    align-items: center;
-    gap: 1rem;
-}
-
-
-.config-input {
-    display: flex;
-    flex-direction: column;
-}
-
-.config-input input {
-    padding: 0.7rem;
-    border-radius: 8px;
-}
-
-.config-input input:focus {
-    outline: none;
-}
-
-.email {
-    display: grid;
-    grid-template-columns: 90% 10%;
-    align-items: center;
-    gap: 1rem;
-}
-
-.password-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.save_change {
-    width: 30%;
-    padding: 1.2rem;
-    border-radius: 8px;
-    color: #fff;
-    background-color: #39A0FF;
-    border: 1px solid transparent;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.save_change:hover {
-    background-color: #fff;
-    color: #39A0FF;
-    border: 1px solid #39A0FF;
-}
-</style>

@@ -1,0 +1,110 @@
+.form-perfil-configuration {
+    color: #fff;
+    width: 100vw;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.wrapper-account__config {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.perfil-config-wrapper {
+    display: grid;
+    width: 50%;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.username-config {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.config-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-input input {
+    padding: 0.7rem;
+    border-radius: 8px;
+}
+
+.config-input input:focus {
+    outline: none;
+}
+
+.email {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.password-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.save_change {
+    width: 30%;
+    padding: 1.2rem;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #39A0FF;
+    border: 1px solid transparent;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.save_change:hover {
+    background-color: #fff;
+    color: #39A0FF;
+    border: 1px solid #39A0FF;
+}
+
+@media (max-width: 1024px) {
+    .perfil-config-wrapper {
+        width: 80%; 
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-perfil-configuration {
+        padding: 1.5rem; 
+        width: 100%;
+    }
+
+    .perfil-config-wrapper {
+        width: 100%; 
+        grid-template-columns: 1fr; 
+        display: flex; 
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .username-config, .email {
+        grid-template-columns: 85% 15%; 
+    }
+
+    .save_change {
+        width: 100%; 
+        padding: 1rem;
+    }
+
+    .wrapper-account__config {
+        gap: 2rem; /
+    }
+}

@@ -77,3 +77,49 @@
     .card-img {
         width: 10rem;
     }
+
+
+@media (max-width: 768px) {
+    .perfil-info {
+        padding: 2rem 1rem; 
+    }
+
+    .perfil-image {
+        width: 7rem; 
+    }
+
+    .perfil-info h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .perfil-tracking {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .track {
+        font-size: 1rem;
+        padding: 1rem;
+        width: 100%; 
+        text-align: center;
+    }
+
+    .section-nav {
+        width: 100%; 
+        justify-content: space-around;
+        font-size: 1.2rem;
+        flex-wrap: wrap;
+    }
+
+    .grid-favorites {
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+    }
+    
+    .perfil-container {
+        width: 100%; 
+        overflow-x: hidden;
+    }
+}

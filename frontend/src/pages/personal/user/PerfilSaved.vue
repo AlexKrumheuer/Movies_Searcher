@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import api from '../../../services/api';
 import { useRouter } from 'vue-router';
+import '../../../style/user/perfilsaved.css'
 
 const props = defineProps({
     display: String
@@ -76,102 +77,3 @@ const goToDetails = (tmdbId, videoType) => {
     </div>
 </template>
 
-<style scoped>
-.favorites-container {
-    padding: 3rem 0;
-    min-height: 60vh;
-}
-
-.favorites-grid {
-    display: grid;
-    width: 100vw;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 5rem;
-    padding: 0 10rem;
-}
-
-.card-wrapper {
-    width: 200px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.card-wrapper:hover {
-    transform: scale(1.05);
-}
-
-.card-img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-}
-
-.loading-msg,
-.empty-msg {
-    color: white;
-    text-align: center;
-    padding: 50px;
-    font-size: 1.2rem;
-}
-
-.card-title {
-    color: #fff;
-    font-size: 1.7rem;
-    flex-wrap: wrap;
-}
-
-.card-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
-    padding: 20px 10px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.card-title {
-    color: #fff;
-    font-size: 1.3rem; 
-    font-weight: bold;
-    margin: 0;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.rating-row {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.star-icon {
-    font-size: 0.9rem;
-    color: #555; 
-}
-
-.star-icon.active {
-    color: #FFD700;
-    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
-}
-
-.rating-value {
-    font-size: 1.3rem;
-    color: #ddd;
-    margin-left: 6px;
-    font-weight: 300;
-}
-
-.no-rating {
-    font-size: 1.3rem;
-    color: #aaa;
-    font-style: italic;
-}
-</style>

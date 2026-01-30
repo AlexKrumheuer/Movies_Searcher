@@ -83,3 +83,31 @@
     font-size: 1.2rem;
 }
 
+@media (max-width: 1024px) {
+    .auth-container {
+        width: 60%; 
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        width: 90%; 
+        margin: 2rem 0; 
+        padding: 1.5rem;
+    }
+
+    .auth-container h2 {
+        font-size: 2rem; 
+    }
+
+    .auth-input__text {
+        font-size: 1.2rem;
+        grid-template-columns: 15% 85%; 
+    }
+
+    .container-redirect {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+}

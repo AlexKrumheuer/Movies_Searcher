@@ -16,6 +16,7 @@
     <div class="perfil-container">
         <PerfilCard/>
         <PerfilTracking/>
+        
         <div class="section-nav">
             <div :style="{ color: display === 'favorite' ? '#39A0FF' : '' }" class="sec" @click="changeDisplay('favorite')">
                 <fa icon="heart"/>
@@ -34,13 +35,14 @@
                 <p>CONFIGURATION</p>
             </div>
         </div>
-        <nav v-if="display == 'favorite'" class="grid-favorites">
+
+        <nav v-if="display == 'favorite'" class="nav-content">
             <PerfilSaved :display="'favorite'"/>
         </nav>
-        <nav v-else-if="display == 'watched'" class="grid-favorites">
+        <nav v-else-if="display == 'watched'" class="nav-content">
             <PerfilSaved :display="'watched'"/>
         </nav>
-        <nav v-else-if="display == 'watchlist'" class="grid-favorites">
+        <nav v-else-if="display == 'watchlist'" class="nav-content">
             <PerfilSaved :display="'watchlist'"/>
         </nav>
         <nav v-else class="perfil-config">

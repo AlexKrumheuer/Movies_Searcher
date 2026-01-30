@@ -1,0 +1,33 @@
+.container-user__content {
+        padding: 4rem;
+        min-height: 80vh;
+        background-color: #0A0A10;
+    }
+
+    .user-content--title {
+        color: #fff;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+@media (max-width: 1024px) {
+    .favorites-container {
+        grid-template-columns: repeat(3, 1fr); 
+        padding: 2rem 3rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    .favorites-container {
+        grid-template-columns: 1fr; 
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .favorites-container h1, 
+    .favorites-container h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}

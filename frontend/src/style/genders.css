@@ -24,3 +24,19 @@
 .genero-button:hover {
     background-color: #1E90FF;
 }
+
+@media (max-width: 768px) {
+    .generos {
+        padding: 1rem; 
+    }
+
+    .lista-generos {
+        width: 100%; 
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .genero-button {
+        font-size: 0.9rem; 
+        margin: 0.2rem;
+    }
+}

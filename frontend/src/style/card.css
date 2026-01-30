@@ -28,3 +28,14 @@
 .card p:hover {
     color: #39A0FF;
 }
+
+@media (max-width: 768px) {
+    .card:hover {
+        transform: none;
+    }
+
+    .card p {
+        font-size: 1.2rem; 
+        bottom: 5px;
+    }
+}

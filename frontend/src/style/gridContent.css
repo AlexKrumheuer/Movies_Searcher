@@ -77,3 +77,38 @@
         border: 1px solid #39A0FF;
         color: #fff;
     }
+
+    @media (max-width: 1024px) {
+    .filme {
+        padding: 2rem 3rem; /* Reduz de 10rem para 3rem */
+    }
+
+    .grid-filme {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    }
+}
+
+@media (max-width: 768px) {
+    .filme {
+        padding: 1rem; 
+        gap: 2rem;
+    }
+
+    .title-filme {
+        font-size: 1.2rem;
+    }
+
+    .grid-filme {
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+    }
+
+    .paginacao {
+        flex-wrap: wrap; 
+    }
+    
+    .paginacao button, .paginacao p {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
+}
