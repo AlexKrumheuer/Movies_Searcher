@@ -1,5 +1,6 @@
 package com.movies_searcher.service;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -78,6 +79,15 @@ public class FavoriteServiceTest {
 
         favoriteService.createFavorite(dto, authentication);
         verify(favoriteRepository, times(1)).save(any(Favorite.class));
+
+        ArgumentCaptor<Favorite> favoriteCaptor = ArgumentCaptor.forClass(Favorite.class);
+        verify(favoriteRepository).save(favoriteCaptor.capture());
+        Favorite savedFavorite = favoriteCaptor.getValue();
+        assertEquals(user, savedFavorite.getUser());
+        assertEquals(550L, savedFavorite.getTmdbId());
+        assertEquals("movie", savedFavorite.getVideoType());
+        assertEquals("/path.jpg", savedFavorite.getPosterPath());
+        assertEquals("Fight Club", savedFavorite.getTitle());
     }
 
     @Test

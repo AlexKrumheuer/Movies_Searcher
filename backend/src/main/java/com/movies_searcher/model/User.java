@@ -60,6 +60,10 @@ public class User implements UserDetails {
         return this.password;
    }
 
+   public String getUsernameNotUserDetails() {
+        return this.username;
+   }
+
    public String getUsername() {
         return this.email;
    }
