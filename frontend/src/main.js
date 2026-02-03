@@ -5,10 +5,16 @@ import { fas} from '@fortawesome/free-solid-svg-icons'
 import './style.css'
 import router from './router'
 import App from './App.vue'
+import Toast from 'vue-toastification'
+import "vue-toastification/dist/index.css";
 
 library.add(fas)
+const options = {
+
+}
 
 createApp(App)
 .component('fa', FontAwesomeIcon)
 .use(router)
+.use(Toast, options)
 .mount('#app')

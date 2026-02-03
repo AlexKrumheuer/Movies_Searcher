@@ -28,6 +28,21 @@
     gap: 1rem;
 }
 
+.username-info {
+    padding: 0.7rem;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    color: #000;
+    font-weight: bold;
+    font-family: 'sans-serif';
+    border: 1px solid transparent;
+}
+
+.username-info__span {
+    background-color: transparent; 
+    color: #fff;
+}
+
 
 .config-input {
     display: flex;

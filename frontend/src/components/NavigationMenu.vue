@@ -7,7 +7,6 @@ import { ref, watch } from 'vue';
 import '../style/navigationMenu.css'
 const emit = defineEmits(['mudar-valor-pesquisa', 'abrir-categoria'])
 const props = defineProps({
-    paginaAtual: String,
     categoriaClicada: Boolean,
 })
 

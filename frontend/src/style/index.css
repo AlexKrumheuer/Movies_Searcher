@@ -42,3 +42,9 @@ img {
 body, html {
     overflow-x: hidden;
 }
+
+.error-message {
+    color: #FF4C4C;
+    font-weight: bold;
+    font-size: 1.1rem;
+}

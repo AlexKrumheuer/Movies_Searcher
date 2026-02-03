@@ -74,7 +74,6 @@ function selectInfo(type) {
 
 const rating = (n) => {
     if(!detalhes.value) return
-    console.log(n)
     ratingManager.setRating(n);
 }
 

@@ -80,11 +80,11 @@
 
     @media (max-width: 1024px) {
     .filme {
-        padding: 2rem 3rem; /* Reduz de 10rem para 3rem */
+        padding: 2rem 3rem;
     }
 
     .grid-filme {
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 

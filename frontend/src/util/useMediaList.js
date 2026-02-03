@@ -1,9 +1,11 @@
 import { ref } from 'vue'
 import api from '../services/api'
+import { useToast } from 'vue-toastification'
 
 export function useMediaList(endpoint, tmdbId) {
     const isAdded = ref(false)
     const isLoading = ref(false)
+    const toast = useToast()
 
     const checkStatus = async () => {
         try {
@@ -37,9 +39,9 @@ export function useMediaList(endpoint, tmdbId) {
             if (e.response && e.response.status === 409) {
                 isAdded.value = true; 
             } else if (e.response && e.response.status === 403) {
-                alert("Expired Session. Sign in again.");
+                toast.error("Expired Session. Sign in again.");
             } else {
-                alert("Error when saving: " + (e.response?.data || "Unkown error"));
+                toast.error("Error when saving: " + (e.response?.data || "Unkown error"));
             }
         } finally {
             isLoading.value = false;

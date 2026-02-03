@@ -67,7 +67,7 @@ const loginUser = async () => {
                         <p>Esqueceu sua senha?</p>
                     </router-link>
                 </div>
-                <p v-if="error" class="auth-error">{{ error }}</p>
+                <p v-if="error" class="error-message">{{ error }}</p>
             </div>
         </form>
     </div>

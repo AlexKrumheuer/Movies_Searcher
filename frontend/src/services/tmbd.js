@@ -4,7 +4,6 @@ const fetchFromBackend = async (endpoint, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
     const url = `${baseUrl}${endpoint}?${queryString}`;
     
-    console.log(`Chamando Backend: ${url}`);
     
     const res = await fetch(url);
     if(!res.ok) throw new Error(`Erro no backend: ${res.status}`);

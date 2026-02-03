@@ -82,7 +82,7 @@ const registrarUser = async () => {
                 <router-link to="/login" class="auth-redirect__links">
                     <p>Do you already have an account?</p>
                 </router-link>
-                <p v-if="error" class="auth-error">{{ error }}</p>
+                <p v-if="error" class="error-message">{{ error }}</p>
             </div>
         </form>
     </div>
