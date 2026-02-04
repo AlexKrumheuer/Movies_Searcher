@@ -40,97 +40,75 @@ const newPassword = ref('')
 const confirmNewPassword = ref('')
 
 const submitForm = async () => {
-    const nameChanged = userData.value.username !== newUsername.value
-    const emailChanged = userData.value.email !== newEmail.value
-    const passwordChanging = newPassword.value !== ''
+    errorMessage.value = '';
 
-    if (!nameChanged && !emailChanged && !passwordChanging) {
-        toast.info("Nenhuma alteração foi detectada.")
-        return
-    }
-    if(!Validator.validateText(userData.value.username)) {
-        console.error("Invalid username")
-        errorMessage.value = "Invalid username"
-        return
-    }
-    if(!Validator.validateEmail(newEmail.value)) {
-        console.error("Invalid email")
-        errorMessage.value = "Invalid email"
-
-        return
-    }
-    if(newPassword.value || confirmNewPassword.value) {
-        if(!Validator.validateEqualsPassword(newPassword.value, confirmNewPassword.value)) {
-            console.error("New passwords do not match")
-            errorMessage.value = "New passwords do not match"
-
-            return
-        }
-        if(!Validator.validatePassword(newPassword.value)) {
-            console.error("Invalid new password")
-            errorMessage.value = "Invalid new password"
-            return
-        }
-    }
-
-    const isTryingToChangePassword = newPassword.value !== '' || confirmNewPassword.value !== ''
+    const isNameChanged = newUsername.value !== userData.value.username;
+    const isEmailChanged = newEmail.value !== userData.value.email;
+    const isTryingPasswordChange = newPassword.value !== '' || confirmNewPassword.value !== '';
     
-    if (isTryingToChangePassword && currentPassword.value === '') {
-        toast.error("Para definir uma nova senha, você precisa informar a senha atual.")
-        return
+    const isSensitiveChange = isEmailChanged || isTryingPasswordChange;
+
+    if (!isNameChanged && !isEmailChanged && !isTryingPasswordChange) {
+        toast.info("Nenhuma alteração detectada.");
+        return;
     }
 
-    if (isTryingToChangePassword && !Validator.validateEqualsPassword(newPassword.value, confirmNewPassword.value)) {
-        toast.error("As novas senhas não coincidem.")
-        return
+    if (!Validator.validateText(newUsername.value)) {
+        errorMessage.value = "Username inválido.";
+        return;
+    }
+    if (!Validator.validateEmail(newEmail.value)) {
+        errorMessage.value = "E-mail inválido.";
+        return;
     }
 
-    const shouldSendPassword = isTryingToChangePassword && currentPassword.value
+    if (isSensitiveChange && !currentPassword.value) {
+        toast.error("A senha atual é obrigatória para alterar e-mail ou senha.");
+        return;
+    }
 
-
-    let passwordTypeForEmailChange = false
-    if(userData.value.email !== newEmail.value) {
-        if(currentPassword.value === '') {
-            console.error("Current password is required to change email")
-            errorMessage.value = "Current password is required to change email"
-            return
-        } else {
-            passwordTypeForEmailChange = true
+    if (isTryingPasswordChange) {
+        if (!Validator.validateEqualsPassword(newPassword.value, confirmNewPassword.value)) {
+            toast.error("As novas senhas não coincidem.");
+            return;
+        }
+        if (!Validator.validatePassword(newPassword.value)) {
+            toast.error("A nova senha não atende aos requisitos de segurança.");
+            return;
         }
     }
-    let passwordAltered = confirmNewPassword.value !== '' && newPassword.value !== '' && currentPassword.value !== ''
+
+    const payload = {
+        username: newUsername.value,
+        email: newEmail.value,
+        currentPassword: isSensitiveChange ? currentPassword.value : null,
+        newPassword: isTryingPasswordChange ? newPassword.value : null,
+        confirmNewPassword: isTryingPasswordChange ? confirmNewPassword.value : null
+    };
+
     try {
-        const payload = {
-            username: newUsername.value,
-            email: newEmail.value,
-            currentPassword:(userData.value.email !== newEmail.value || shouldSendPassword) 
-                             ? currentPassword.value 
-                             : null,
-            newPassword: passwordAltered ? newPassword.value : null,
-            confirmNewPassword: passwordAltered ? confirmNewPassword.value : null
-        }
-        console.log(payload)
-        const response = await api.put("/auth/me", payload)
-        errorMessage.value = ''
-        if(userData.value.email !== newEmail.value) {
-            toast.info("Please confirm your new email address through the link sent to your email.")
-        }
-        toast.success("User info updated successfully")
-        currentPassword.value = ''
-        newPassword.value = ''
-        confirmNewPassword.value = ''
-    } catch(error) {
-        const status = error.response?.status
-        const backendMessage = error.response?.data?.message
-
-        if (status === 401 || status === 403) {
-            toast.error("A senha atual informada está incorreta.")
-        } else if (status === 409) {
-            toast.error(backendMessage || "Este nome de usuário ou e-mail já está em uso.")
-        } else if (status === 400) {
-            toast.warning("Verifique os dados informados: " + (backendMessage || "Dados inválidos."))
+        const response = await api.put("/auth/me", payload);
+        
+        if (isEmailChanged) {
+            toast.info("Verifique o link de confirmação enviado para o seu novo e-mail.");
         } else {
-            toast.error("Ops! Ocorreu um erro no servidor. Tente mais tarde.")
+            toast.success("Perfil atualizado com sucesso!");
+        }
+
+        userData.value.username = newUsername.value;
+        
+        currentPassword.value = '';
+        newPassword.value = '';
+        confirmNewPassword.value = '';
+        
+    } catch (error) {
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+            toast.error("A senha atual informada está incorreta.");
+        } else if (status === 409) {
+            toast.error("Este nome de utilizador ou e-mail já está em uso.");
+        } else {
+            toast.error("Erro ao atualizar perfil. Tente novamente mais tarde.");
         }
     }
 }

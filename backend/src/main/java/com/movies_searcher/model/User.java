@@ -44,6 +44,12 @@ public class User implements UserDetails {
         this.createdAt = LocalDate.now();
     }
 
+    @Column(name="profile_image_url", length = 500)
+    private String profileImageUrl = "no_image";
+
+    @Column(name="banner_url", length = 500)
+    private String bannerUrl = "no_image";
+
     private LocalDate createdAt;
     public User(String username, String email, String password) {
         this.username = username;
@@ -66,6 +72,14 @@ public class User implements UserDetails {
 
    public String getUsername() {
         return this.email;
+   }
+
+   public String getName() {
+      return this.username;
+   }
+
+   public void setName(String username) {
+      this.username = username;
    }
 
    public boolean isAccountNonExpired() {

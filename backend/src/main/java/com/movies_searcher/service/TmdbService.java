@@ -12,7 +12,7 @@ public class TmdbService {
 
     private final RestClient restClient; // Instanciate http client
 
-    public TmdbService(RestClient.Builder builder, @Value("${api.key}") String apiKey) {
+    public TmdbService(RestClient.Builder builder, @Value("${tmdb.api.key}") String apiKey) {
 
         this.apiKey = apiKey;
 

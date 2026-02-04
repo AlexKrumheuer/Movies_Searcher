@@ -5,7 +5,9 @@ import java.time.LocalDate;
 public record UserResponseDTO(
     String username,
     String email,
-    LocalDate createdAt
+    LocalDate createdAt,
+    String profileImageUrl,
+    String bannerUrl
 ) {
     
 }
