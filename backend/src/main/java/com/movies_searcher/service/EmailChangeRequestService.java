@@ -67,7 +67,7 @@ public class EmailChangeRequestService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject("CineScope - Confirme seu novo e-mail");
-        String confirmationUrl = "http://localhost:8080/auth/confirm-email?token=" + token;
+        String confirmationUrl = "http://localhost:5173/auth/confirm-email?token=" + token;
         message.setText("Olá! Você solicitou a alteração do seu e-mail para " + newEmail + ".\n\n" +
                         "Clique no link abaixo para confirmar:\n" + confirmationUrl +
                         "\n\nEste link expira em 2 horas.");

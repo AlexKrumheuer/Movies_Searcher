@@ -75,6 +75,12 @@ public class AuthService {
             if (!passwordEncoder.matches(dto.currentPassword(), actualPassword)) {
                 throw new IllegalArgumentException("Current password is incorrect");
             }
+
+            var userWithEmail = userRepository.findByEmail(dto.email());
+        
+            if (userWithEmail.isPresent()) {
+                throw new RuntimeException("Este e-mail já está sendo utilizado por outra conta.");
+            }
             emailChangeRequestService.createEmailChangeRequest(dto.email(), user);
         }
 

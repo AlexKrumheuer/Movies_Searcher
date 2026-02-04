@@ -10,6 +10,7 @@ const userData = ref({})
 const newUsername = ref('')
 const newEmail = ref('')  
 const toast = useToast() 
+const isLoading = ref(false) 
 
 onMounted(async () => {
     try {
@@ -23,17 +24,11 @@ onMounted(async () => {
 })
 
 const errorMessage = ref('')
-
 const usernameIsEditing = ref(false)
-const usernameEditClick = () => {
-    usernameIsEditing.value = !usernameIsEditing.value
-}
-
 const emaiilIsEditing = ref(false)
-const emailEditClick = () => {
-    emaiilIsEditing.value = !emaiilIsEditing.value
-}
 
+const usernameEditClick = () => usernameIsEditing.value = !usernameIsEditing.value
+const emailEditClick = () => emaiilIsEditing.value = !emaiilIsEditing.value
 
 const currentPassword = ref('')
 const newPassword = ref('')
@@ -45,71 +40,60 @@ const submitForm = async () => {
     const isNameChanged = newUsername.value !== userData.value.username;
     const isEmailChanged = newEmail.value !== userData.value.email;
     const isTryingPasswordChange = newPassword.value !== '' || confirmNewPassword.value !== '';
-    
     const isSensitiveChange = isEmailChanged || isTryingPasswordChange;
 
     if (!isNameChanged && !isEmailChanged && !isTryingPasswordChange) {
-        toast.info("Nenhuma alteração detectada.");
+        toast.info("No changes detected.");
         return;
     }
 
+    // Validações de frontend
     if (!Validator.validateText(newUsername.value)) {
-        errorMessage.value = "Username inválido.";
-        return;
+        errorMessage.value = "Username invalid."
+        return
     }
     if (!Validator.validateEmail(newEmail.value)) {
-        errorMessage.value = "E-mail inválido.";
-        return;
+        errorMessage.value = "E-mail invalid."
+        return
     }
-
     if (isSensitiveChange && !currentPassword.value) {
-        toast.error("A senha atual é obrigatória para alterar e-mail ou senha.");
-        return;
-    }
-
-    if (isTryingPasswordChange) {
-        if (!Validator.validateEqualsPassword(newPassword.value, confirmNewPassword.value)) {
-            toast.error("As novas senhas não coincidem.");
-            return;
-        }
-        if (!Validator.validatePassword(newPassword.value)) {
-            toast.error("A nova senha não atende aos requisitos de segurança.");
-            return;
-        }
+        toast.error("The current password is required to update e-mail.")
+        return
     }
 
     const payload = {
         username: newUsername.value,
         email: newEmail.value,
-        currentPassword: isSensitiveChange ? currentPassword.value : null,
-        newPassword: isTryingPasswordChange ? newPassword.value : null,
-        confirmNewPassword: isTryingPasswordChange ? confirmNewPassword.value : null
+        currentPassword: currentPassword.value || null,
+        newPassword: newPassword.value || null
     };
 
+    isLoading.value = true
+
     try {
-        const response = await api.put("/auth/me", payload);
+        await api.put("/auth/me", payload)
         
         if (isEmailChanged) {
-            toast.info("Verifique o link de confirmação enviado para o seu novo e-mail.");
+            toast.info("Verify your verification link sent to your e-mail to complete the update.")
         } else {
-            toast.success("Perfil atualizado com sucesso!");
+            toast.success("Perfil updated successfully!")
         }
 
-        userData.value.username = newUsername.value;
-        
-        currentPassword.value = '';
-        newPassword.value = '';
-        confirmNewPassword.value = '';
+        userData.value.username = newUsername.value
+        currentPassword.value = ''
+        newPassword.value = ''
+        confirmNewPassword.value = ''
         
     } catch (error) {
-        const status = error.response?.status;
-        if (status === 401 || status === 403) {
-            toast.error("A senha atual informada está incorreta.");
-        } else if (status === 409) {
-            toast.error("Este nome de utilizador ou e-mail já está em uso.");
+        const apiMessage = error.response?.data
+
+        if (apiMessage) {
+            toast.error(apiMessage)
         } else {
-            toast.error("Erro ao atualizar perfil. Tente novamente mais tarde.");
+            toast.error("Error when updating perfil. Try again later.")
         }
+    } finally {
+        isLoading.value = false
     }
 }
 </script>
@@ -177,7 +161,12 @@ const submitForm = async () => {
                 </div>
             </div>
         </div>  
-        <button class="save_change">Save Changes</button>
+        <button class="save_change" :disabled="isLoading">
+            <span v-if="isLoading">
+                <fa icon="spinner" spin /> Saving...
+            </span>
+            <span v-else>Save Changes</span>
+        </button>
         <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
     </form>
 </template>

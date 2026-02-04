@@ -58,6 +58,11 @@ const routes = [
         meta: { requiredAuth: true },
         component: () => import('../pages/personal/watchList/WatchList.vue')
     },
+    {
+        path: '/auth/confirm-email',
+        name: 'confirm-email',
+        component: () => import('../pages/auth/ConfirmEmail.vue')
+    }
 ]
 
 const router = createRouter({
@@ -67,7 +72,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-
+    
     const token = localStorage.getItem('token')
 
     if(requiresAuth && !token) {

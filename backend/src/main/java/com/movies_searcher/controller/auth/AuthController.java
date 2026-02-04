@@ -52,7 +52,6 @@ public class AuthController {
 
     @GetMapping("/confirm-email")
     public ResponseEntity<UserResponseDTO> getMethodName(@RequestParam String token) {
-        System.out.println("O token é esse porra: " + token);
         UserResponseDTO userReturn = emailChangeRequestService.confirmEmailUpdate(token);
         return ResponseEntity.ok(userReturn);
     }
@@ -88,7 +87,6 @@ public class AuthController {
             User user = authService.registerUser(data);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
