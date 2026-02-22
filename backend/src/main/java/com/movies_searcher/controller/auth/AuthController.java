@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 
-
+// Controller to handle authentication-related endpoints
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -44,19 +44,22 @@ public class AuthController {
         this.emailChangeRequestService = emailChangeRequestService;
     }
 
+
+    // Info about current authenticated user
     @GetMapping("/me")
     public ResponseEntity<UserResponseDTO> getCurrentUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(new UserResponseDTO(user.getName(), user.getEmail(), user.getCreatedAt(), user.getProfileImageUrl(), user.getBannerUrl()));
     }
 
+    // Confirm email update endpoint
     @GetMapping("/confirm-email")
     public ResponseEntity<UserResponseDTO> getMethodName(@RequestParam String token) {
         UserResponseDTO userReturn = emailChangeRequestService.confirmEmailUpdate(token);
         return ResponseEntity.ok(userReturn);
     }
     
-
+    // Edit user profile endpoint
     @PutMapping("/me")
     public ResponseEntity<UserResponseDTO> editPerfil(
         @RequestBody @Valid EditUserDTO dto, 
@@ -66,6 +69,8 @@ public class AuthController {
         return ResponseEntity.ok(new UserResponseDTO(updatedUser.getName(), updatedUser.getEmail(), updatedUser.getCreatedAt(), updatedUser.getProfileImageUrl(), updatedUser.getBannerUrl()));
     }
 
+
+    // Upload profile image endpoint
     @PostMapping("/me/profile-image")
     public ResponseEntity<UserResponseDTO> postProfileImage(@RequestParam("file") MultipartFile file, Authentication auth) {
         User user = (User) auth.getPrincipal();
@@ -73,6 +78,8 @@ public class AuthController {
         return ResponseEntity.ok(new UserResponseDTO(updatedUser.getName(), updatedUser.getEmail(), updatedUser.getCreatedAt(), updatedUser.getProfileImageUrl(), updatedUser.getBannerUrl()));
     }
     
+
+    // Upload banner image endpoint
     @PostMapping("/me/banner-image")
     public ResponseEntity<UserResponseDTO> postBannerImage(@RequestParam("file") MultipartFile file, Authentication auth) {
         User user = (User) auth.getPrincipal();
@@ -80,7 +87,7 @@ public class AuthController {
         return ResponseEntity.ok(new UserResponseDTO(updatedUser.getName(), updatedUser.getEmail(), updatedUser.getCreatedAt(), updatedUser.getProfileImageUrl(), updatedUser.getBannerUrl()));
     }
     
-
+    
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody @Valid RegisterUserDTO data) {
         try {

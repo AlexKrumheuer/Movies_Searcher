@@ -27,8 +27,9 @@ public class SecurityConfig {
         this.securityFilter = securityFilter;
     }
 
+    // Security filter chain bean
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
@@ -45,6 +46,8 @@ public class SecurityConfig {
             .build();
     }
 
+
+    // Cors configuration bean
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
@@ -58,11 +61,14 @@ public class SecurityConfig {
         return source;
     }
 
+    // Bean to return user authentication manager
     @Bean
-    public AuthenticationManager AuthenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) {
         return configuration.getAuthenticationManager();
     }
 
+
+    // Bean to encode passwords using BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
